@@ -43,6 +43,20 @@ kubectl apply -f routes/keycloak-example-com-httproute.yaml
 
 popd
 
+#----------------------------------------- Install Gloo Gateway Portal Postgres DB -----------------------------------------
+pushd ../
+
+kubectl create namespace gloo-system --dry-run=client -o yaml | kubectl apply -f -
+
+kubectl apply -f portal/postgres.yaml
+kubectl apply -f portal/pg-admin.yaml
+kubectl apply -f portal/portal-database-config-secret.yaml
+
+printf "\nWait for Portal Database readiness ...\n"
+kubectl -n gloo-system rollout status deploy/pgadmin
+
+popd
+
 #----------------------------------------- Install Gloo Gateway with K8S Gateway API support -----------------------------------------
 
 printf "\nInstalling Gloo Gateway $GLOO_GATEWAY_VERSION ...\n"

@@ -11,13 +11,13 @@ spec:
       pullAttempts: 30
       useBackoff: false
   servedBy:
-    # - targetRef:
-    #     kind: Service
-    #     name: httpbin
-    #     namespace: httpbin
-    #   port: 8000
     - targetRef:
-        group: gloo.solo.io
-        kind: Upstream
-        name: httpbin-httpbin-8000
-        namespace: gloo-system
+        kind: Service
+        name: httpbin
+        namespace: httpbin
+      port: 8000
+    # - targetRef:
+    #     group: gloo.solo.io
+    #     kind: Upstream
+    #     name: httpbin-httpbin-8000
+    #     namespace: gloo-system

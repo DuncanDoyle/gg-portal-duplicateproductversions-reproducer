@@ -8,11 +8,6 @@ metadata:
   annotations:
     delegation.gateway.solo.io/inherit-parent-matcher: "true"
 spec:
-  # parentRefs:
-  #   - name: gw
-  #     namespace: ingress-gw
-  # hostnames:
-  #   - "httpbin2.example.com"
   rules:
     - matches:  
       - path:
@@ -27,10 +22,10 @@ spec:
             type: ReplacePrefixMatch
             replacePrefixMatch: /
       backendRefs:
-      - name: httpbin-httpbin-8000
-        namespace: gloo-system
-        group: gloo.solo.io
-        kind: Upstream
-      # - name: httpbin
-      #   namespace: httpbin
-      #   port: 8000
+      # - name: httpbin-httpbin-8000
+      #   namespace: gloo-system
+      #   group: gloo.solo.io
+      #   kind: Upstream
+      - name: httpbin
+        namespace: httpbin
+        port: 8000

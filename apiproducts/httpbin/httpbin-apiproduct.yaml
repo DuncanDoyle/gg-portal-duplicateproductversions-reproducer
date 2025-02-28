@@ -13,7 +13,7 @@ spec:
     pii-sensitive: "true"
     api-category: "demo"
   versions:
-    - apiVersion: "v1"
+    - apiVersion: "v4"
       targetRefs:
       - name: httpbin-apiproduct
         namespace: httpbin

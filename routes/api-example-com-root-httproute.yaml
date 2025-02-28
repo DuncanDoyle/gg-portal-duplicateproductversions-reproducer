@@ -37,26 +37,3 @@ spec:
       kind: HTTPRoute
       name: httpbin-apiproduct
       namespace: httpbin
-  - matches:  
-    - path:
-        type: PathPrefix
-        value: /httpbin/v2.0/
-    filters:
-    # The URLRewrite in the parent technically works (from a "proxy perspective"), 
-    # but the Portal will not correctly stitch the schema if we do not set on the child route as well.
-    - type: URLRewrite
-      urlRewrite:
-        path:
-          type: ReplacePrefixMatch
-          replacePrefixMatch: /
-    - type: ExtensionRef
-      extensionRef:
-        group: gateway.solo.io
-        kind: RouteOption
-        name: routeoption-apiproducts
-    backendRefs:
-    # Delegate to another HTTPRoute
-    - group: gateway.networking.k8s.io
-      kind: HTTPRoute
-      name: httpbin2-apiproduct
-      namespace: httpbin2
