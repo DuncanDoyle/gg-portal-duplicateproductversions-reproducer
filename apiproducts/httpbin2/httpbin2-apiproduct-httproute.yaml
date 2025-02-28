@@ -1,0 +1,36 @@
+apiVersion: gateway.networking.k8s.io/v1beta1
+kind: HTTPRoute
+metadata:
+  name: httpbin2-apiproduct
+  namespace: httpbin2
+  labels:
+    app: apis
+  annotations:
+    delegation.gateway.solo.io/inherit-parent-matcher: "true"
+spec:
+  # parentRefs:
+  #   - name: gw
+  #     namespace: ingress-gw
+  # hostnames:
+  #   - "httpbin2.example.com"
+  rules:
+    - matches:  
+      - path:
+          type: PathPrefix
+          value: /
+      filters:
+      # Need to specify the URLRewrite here. The URLRewrite set on the parent route, although correctly configured on the proxy,
+      # will prevent the APIDoc from being stitched by the Portal controller.
+      - type: URLRewrite
+        urlRewrite:
+          path:
+            type: ReplacePrefixMatch
+            replacePrefixMatch: /
+      backendRefs:
+      - group: gloo.solo.io
+        kind: Upstream
+        name: httpbin-httpbin-8000
+        namespace: gloo-system
+      # - name: httpbin
+      #   namespace: httpbin
+      #   port: 8000

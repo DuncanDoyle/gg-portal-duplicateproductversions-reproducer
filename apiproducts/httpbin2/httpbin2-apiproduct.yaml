@@ -1,0 +1,25 @@
+
+apiVersion: portal.gloo.solo.io/v1
+kind: ApiProduct
+metadata:
+  labels:
+    expose-portal: "true"
+  name: httpbin2
+  namespace: httpbin2
+spec:
+  id: httpbin2-svc
+  displayName: HTTPBin Service v1
+  customMetadata:
+    image: <url>
+    pii-sensitive: "true"
+    api-category: "demo"
+  versions:
+    - apiVersion: "v1"
+      targetRefs:
+      - name: httpbin2-apiproduct
+        namespace: httpbin2
+        group: gateway.networking.k8s.io
+        kind: HTTPRoute
+      openapiMetadata:
+      customMetadata:
+          phase: supported
